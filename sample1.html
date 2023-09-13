@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phonenumber Validator Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="all-countries.js"></script>
+    <script src="bsms-overlay.js"></script>
+    <script src="bsms-captcha-wrapper.js"></script>
+    <script src="bsms-country-picker.js"></script>
+    <script src="bsms-code-picker.js"></script>
+    <script src="bsms-phonenumber-validator.js"></script>
+    <style>
+        h2, label, input {
+            font-family: arial
+        }
+    </style>
+</head>
+<body>
+    <h2>Example Registration Form</h2>
+    <form>
+        <br><br><label for="username">Username</label>
+        <br><br><input id="username" type="text">
+        <br><br><label for="phonenbr">Phonenumber</label>
+        <br><br><input id="phonenbr" type="text" class="phonenumber-validator-container">
+        <br><br><input type="submit" value="Register" />
+    </form>
+    <script>
+        $(document).ready(function () {
+            // Apply the phonenumber-validator to the container
+            const bpnv = $('.phonenumber-validator-container').bsmsPhonenumberValidator({
+                countries: allCountries,
+                defaultCountry: "DE",
+                defaultLocalnumber: 1736353043,
+                twofaSitekey: "yrNSeICcN6HNwDIZ7DffL5lyN8bM9mqRRnzHF8zJWjtWK9ZC2zy3dL8qyOMXfnAMuUvpG1Iyy5KPJ47ulD5oPQS6H6JW2dmkmnl0aK87n2ReuBWbaUOKF1GdNydIngOE"
+            })
+                .onSolved(p => { console.log(`phonenumber-validator.onSolved ${p}`); })
+                .onLoad(p => { console.log(`phonenumber-validator.onLoad   ${p}`); })
+                .onExpired(p => { console.log(`phonenumber-validator.onExpired${p}`); })
+                .onError(p => { console.log(`phonenumber-validator.onError  ${p}`); });
+        });
+    </script>
+</body>
+</html>
