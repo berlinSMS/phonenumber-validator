@@ -1,11 +1,22 @@
 # jQuery PhonenumberValidator
 [Homepage](https://www.berlinsms.de/)
 
+# Description
+A jquery-plugin to verify a phonenumber direct in the formular.
+
+The user can enter his phone number in the form.
+
+BerlinSMS will send a code to this number.
+
+The user receives this code via SMS and has to enter it again on the website.
+
+If the code is correct, the frontend receives a callback and a token.
+
+The token can be used to check the validity in the backend.
+
 # Usage
 
-Include jquery
-
-    
+Include jquery    
 ```html
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 ```
@@ -34,7 +45,7 @@ $(document).ready(function () {
 
 Add options, if needed:
 ```js
-$(document).ready(function() {
+$(document).ready(()=>{
 	$('.phonenumber-validator-container').bsmsPhonenumberValidator({
 		countries: { 
 			"AT": { name:"Österreich",  code:"+43"} ,

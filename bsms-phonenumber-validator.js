@@ -66,6 +66,20 @@
     position: relative;
 	width: 373px;
 }
+.${options.className} .credits {    
+    position:relative;
+    left:80px;
+    top:0px;
+    background-color: white;
+    padding: 2px 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color:black;
+    font-size:12px;
+    font-family:arial;
+    text-decoration: None;
+	white-space: nowrap;
+}
 .${options.className} .country-picker-container {
     position:relative;
     margin:0;
@@ -93,6 +107,7 @@
 }
 .${options.className} .verification-start {
 	position: absolute;
+	top:0;
 	right: 3px;
     margin:0;
     padding:0;
@@ -104,6 +119,7 @@
 }
 .${options.className} .verification-end {
 	position: absolute;
+	top:0;
 	right: 6px;
     margin:0;
     padding:0;
@@ -209,6 +225,7 @@
             onLoad: null,
             onExpired: null,
             onError: null,
+            showCredits: true
         };
 
         const settings = $.extend({}, defaultSettings, options);
@@ -219,7 +236,7 @@
         getAccountData(settings.twofaSitekey)
             .then(
                 accountData => caller.each((nr, target) => buildDom(target, accountData)),
-                error => { $overlay.showPage('error', error); }
+                error => { $.bsmsOverlay({showCredits:false}).showPage('error', error); }
             )     
 
         function buildDom(target, accountData) {
@@ -237,7 +254,7 @@
                 .appendTo($validator);
             const $countryCode = $(`<div class="country-picker-container"></div>`)
                 .appendTo($validator)
-                .bsmsCountryPicker({ countries: settings.countries, defaultCountry: settings.defaultCountry })
+                .bsmsCountryPicker({ countries: settings.countries, defaultCountry: settings.defaultCountry, showCredits: false})
                 .change(countryCodeChanged);
             const $localNumber = $(`<input class="local-number" type="text" placeholder="Phonenumber" name="local-number">`)
                 .appendTo($validator)
@@ -250,13 +267,16 @@
             const $okCheckmark = $(`<div class="verification-end" title="Telefonnummer bestätigt">&#x2714;</div>`)
                 .appendTo($validator)
                 .hide();
-
+            if (settings.showCredits) {
+                $validator.append(`<a class="credits" href="https://www.berlinsms.de">phonenumber-validator powered by berlinsms.de</a>`);
+            }
 
             //Overlay-Captcha
             const $captchaPage = $(`<div id="cw1" class="captcha-page"></div>`)
                 .bsmsCaptchaWrapper({
                     captchaType: accountData.captchaType,//'reCaptcha',
-                    sitekey: accountData.captchaSitekey
+                    sitekey: accountData.captchaSitekey,
+                    showCredits:false
                 })
                 .onSolved(captchaSolved)
                 .onExpired(captchaExpired)
@@ -264,11 +284,11 @@
 
             //Overlay-ValidationCode
             const $vcodePage = $(`<div class="vcode-page"></div>`)
-                .bsmsCodePicker()
+                .bsmsCodePicker({showCredits:false})
                 .lastDigitEntered(vcodeEntered);
 
             //Overlay
-            const $overlay = $.bsmsOverlay()
+            const $overlay = $.bsmsOverlay({showCredits:false})
                 .addPage('captcha', '', $captchaPage)
                 .addPage('vcode', '', $vcodePage)
                 .addPage('error')
