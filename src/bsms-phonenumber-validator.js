@@ -50,7 +50,6 @@
         const caller = this;
         const fadeInDuration = 1000;
         const twofaApi = 'https://api.berlinsms.de/twofa';
-        const _getSecretUrl = "https://twofa.berlinsms.de";
         var g_address;
         var g_challengeToken;
 
@@ -59,167 +58,12 @@
             optinMail: 'optin(mail)',
         };
 
-        if (!options.className) options.className = 'bsms-phonenumber-validator';
-
-        const defaultStyles = `
-.${options.className} {
-    position: relative;
-	width: 373px;
-}
-.${options.className} .credits {    
-    position:relative;
-    left:80px;
-    top:0px;
-    background-color: white;
-    padding: 2px 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    color:black;
-    font-size:12px;
-    font-family:arial;
-    text-decoration: None;
-	white-space: nowrap;
-}
-.${options.className} .country-picker-container {
-    position:relative;
-    margin:0;
-    padding:1px 3px;
-    width:55px;
-    height:25px;
-    border:solid 2px darkblue;
-    border-radius:6px 0 0 6px;
-    overflow:visible;
-    display:inline-block;
-    vertical-align:top;
-    z-index:1
-}
-.${options.className} .local-number {
-    margin:0;
-    padding:1px 3px;
-    width:300px;
-    height:25px;
-    border:solid 2px darkblue;
-    border-left:0;
-    border-radius:0 6px 6px 0;
-    display:inline-block;
-    vertical-align:top;
-    z-index:0
-}
-.${options.className} .verification-start {
-	position: absolute;
-	top:0;
-	right: 3px;
-    margin:0;
-    padding:0;
-    border:0;
-    background:none;
-    font-size:22px;    
-    color: darkred;
-	cursor: pointer;  
-}
-.${options.className} .verification-end {
-	position: absolute;
-	top:0;
-	right: 6px;
-    margin:0;
-    padding:0;
-    border:0;
-    background:none;
-    font-size:24px;    
-    color: darkgreen;
-    display: inline-block;
-}
-.${options.className} .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Hintergrundfarbe mit Transparenz */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index:1;
-}
-.${options.className} .overlay-close {
-    position:absolute;
-    right:5px;
-    top:5px;
-    background-color: white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    font-size:28px;
-    line-height:20px;
-    cursor: pointer
-}
-.${options.className} .overlay-content {
-    position:relative;
-    width:400px;
-    height:250px;
-    background-color: white;
-    /*padding: 20px;*/
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family:arial;
-    /*background:yellow;*/
-}
-.${options.className} .overlay-captcha {
-}
-.${options.className} .captcha-text {
-    position:absolute;
-    top:10px;
-    left:0;
-    width:380px;
-    padding:10px;
-}
-.${options.className} .captcha-page {
-}
-.${options.className} .overlay-vcode {
-}
-.${options.className} .vcode-text {
-    position:absolute;
-    top:10px;
-    left:0;
-    width:380px;
-    padding:10px;
-}
-.${options.className} .vcode-page {
-}
-.${options.className} .overlay-error {
-}
-.${options.className} .error-text {
-    position:absolute;
-    top:10px;
-    left:0;
-    width:380px;
-    padding:10px;
-    color:darkred;
-}
-.${options.className} .overlay-wait {
-}
-.${options.className} .wait-text {
-    position:absolute;
-    top:10px;
-    left:0;
-    width:380px;
-    padding:10px;
-    color:darkred;
-}
-.${options.className} .wait-page {
-}`;
-
         const defaultSettings = {
-            userStyles: defaultStyles,
-            countries: { "DE": { name: "Germany", code: "+49" } },
+            countries: undefined,
             defaultCountry: "DE",
             defaultLocalnumber: "",
             inputNamePhonenumber: 'bsms-phonenumber',
             inputNameToken: 'bsms-challenge-token',
-            className: 'bsms-phonenumber-validator',
             twofaSitekey: null,
             onSolved: null,
             onLoad: null,
@@ -230,9 +74,6 @@
 
         const settings = $.extend({}, defaultSettings, options);
 
-        $(`<style type="text/css">${settings.userStyles}</style>`)
-            .prependTo('head');
-
         getAccountData(settings.twofaSitekey)
             .then(
                 accountData => caller.each((nr, target) => buildDom(target, accountData)),
@@ -240,7 +81,7 @@
             )     
 
         function buildDom(target, accountData) {
-            const $validator = $(`<div class="${options.className}"></div>`);
+            const $validator = $(`<div class="bsms-phonenumber-validator"></div>`);
             if ('div' == target.nodeName.toLowerCase()) {
                 $(target).append($validator);
             } else {

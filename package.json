@@ -1,0 +1,38 @@
+{
+  "name": "@berlinsms/phonenumber-validator",
+  "version": "1.0.4",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "jquery-plugin to verify a phonenumber direct in the formular.",
+  "scripts": {
+    "build": "webpack --mode production",
+    "minify": "webpack --mode development",
+    "deploy": "npm run build && svn commit && git push && npm login && npm publish --access public && npm unpublish @berlinsms/phonenumber-validator@1.0.3 --force"
+  },
+  "keywords": [
+    "js",
+    "phonenumber",
+    "validate",
+    "live",
+    "online",
+    "browser",
+    "jquery"
+  ],
+  "author": "haka for berlinsms <service@berlinsms.de> (https://www.berlinsms.de)",
+  "license": "MIT",
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "raw-loader": "^4.0.2",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "@berlinsms/captcha-wrapper": "^1.0.4",
+    "@berlinsms/code-picker": "^1.0.4",
+    "@berlinsms/country-picker": "^1.0.5",
+    "@berlinsms/overlay": "^1.0.4"
+  }
+}

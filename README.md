@@ -16,19 +16,16 @@ The token can be used to check the validity in the backend.
 
 # Usage
 
-Include jquery    
-```html
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-```
-
 Download bsms-phonenumber-validator.js
 ```link
-https://raw.githubusercontent.com/berlinSMS/phonenumber-validator/main/bsms-phonenumber-validator.js
+https://static.berlinsms.de/toolsforcoder/overlay/dist/bsms-phonenumber-validator.min.js
+https://static.berlinsms.de/toolsforcoder/overlay/dist/bsms-phonenumber-validator.css
 ```
 
-Include bsms-phonenumber-validator
+Include jquery and bsms-phonenumber-validator.js
 ```html
-<script src="bsms-phonenumber-validator.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="bsms-phonenumber-validator.min.js"></script>
 ```
 
 Find your jquery-container and assign phonenumber-validator
@@ -73,7 +70,6 @@ function onSolvedCallback() {
 
 | Option               | DESCRIPTION                                                                                                                                       | DEFAULT                               |
 |----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------|
-| className            | For costum-css, class of the dropdown-container                                                                                                   | bsms-country-code                     |         
 | inputNamePhonenumber | Name attribute of a hidden input tag. The plugin adds it to the form and writes the phonenumber into the value                                    | bsms-phonenumber                      |
 | inputNameToken       | Name attribute of a hidden input tag. The plugin adds it to the form and writes the challenge token into the value                                | bsms-challenge-token                  |
 | countries            | Dictionary of available countries, each key must be an uniqued identifier of a country, values are dictionaries with name and code of the country | {"DE": { name:"Germany", code:"+49"}} |
