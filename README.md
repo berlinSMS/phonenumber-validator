@@ -18,8 +18,7 @@ The token can be used to check the validity in the backend.
 
 Download bsms-phonenumber-validator.js
 ```link
-https://static.berlinsms.de/toolsforcoder/overlay/dist/bsms-phonenumber-validator.min.js
-https://static.berlinsms.de/toolsforcoder/overlay/dist/bsms-phonenumber-validator.css
+https://static.berlinsms.de/toolsforcoder/phonenumber-validator/dist/bsms-phonenumber-validator.min.js
 ```
 
 Include jquery and bsms-phonenumber-validator.js

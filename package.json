@@ -22,9 +22,7 @@
   "author": "haka for berlinsms <service@berlinsms.de> (https://www.berlinsms.de)",
   "license": "MIT",
   "devDependencies": {
-    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
-    "raw-loader": "^4.0.2",
     "style-loader": "^3.3.3",
     "webpack": "^5.88.2",
     "webpack-cli": "^4.10.0"
