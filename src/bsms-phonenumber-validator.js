@@ -101,11 +101,13 @@
                 .appendTo($validator)
                 .change(localNumberChanged)
                 .on("keyup", localNumberKeyup);
-            const $verifyButton = $(`<button class="verification-start" title="Zur Bestätigung Ihrer Telefonnummer senden wir Ihnen einen Code per SMS zu. Klicken Sie hier, um den Bestätigunsprozess zu starten.">&#x1F4AC;</button>`)
+            const $verifyButton = $(`<div class="state-button start" title="Zur Bestätigung Ihrer Telefonnummer senden wir Ihnen einen Code per SMS zu. Klicken Sie hier, um den Bestätigunsprozess zu starten."></button>`)
+                .append('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style=""><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg><span>Verify</span>')
                 .appendTo($validator)
                 .hide()
                 .click(verificationStart);
-            const $okCheckmark = $(`<div class="verification-end" title="Telefonnummer bestätigt">&#x2714;</div>`)
+            const $okCheckmark = $(`<div class="state-button end" title="Telefonnummer bestätigt"></div>`)
+                .append('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>')
                 .appendTo($validator)
                 .hide();
             if (settings.showCredits) {

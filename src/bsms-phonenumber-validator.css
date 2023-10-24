@@ -41,30 +41,6 @@
     vertical-align:top;
     z-index:0
 }
-.bsms-phonenumber-validator .verification-start {
-	position: absolute;
-	top:0;
-	right: 3px;
-    margin:0;
-    padding:0;
-    border:0;
-    background:none;
-    font-size:22px;    
-    color: darkred;
-	cursor: pointer;  
-}
-.bsms-phonenumber-validator .verification-end {
-	position: absolute;
-	top:0;
-	right: 6px;
-    margin:0;
-    padding:0;
-    border:0;
-    background:none;
-    font-size:24px;    
-    color: darkgreen;
-    display: inline-block;
-}
 .bsms-phonenumber-validator .overlay {
     position: fixed;
     top: 0;
@@ -147,3 +123,31 @@
 }
 .bsms-phonenumber-validator .wait-page {
 }
+.bsms-phonenumber-validator .state-button {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    width: auto;
+    height: 27px;
+    color: #000;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    display: flex;
+    background: #eee;
+    padding: 0 8px;
+    cursor: pointer;
+}
+.bsms-phonenumber-validator .state-button:hover {
+    background: #000;
+    color: #fff;
+}
+.bsms-phonenumber-validator .state-button svg {
+    width: 10px;
+    height: 10px;
+    margin: 0;
+    display: block;
+}
+.bsms-phonenumber-validator .state-button span {
+    margin-left: 8px;
+} 
