@@ -1,6 +1,6 @@
 {
   "name": "@berlinsms/phonenumber-validator",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "publishConfig": {
     "access": "public"
   },
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "minify": "webpack --mode development",
-    "deploy": "npm run build && svn commit && git push && npm login && npm publish --access public && npm unpublish @berlinsms/phonenumber-validator --force"
+    "deploy": "npm run build && svn commit && git push && npm login && npm unpublish @berlinsms/phonenumber-validator --force && npm deprecate @berlinsms/phonenumber-validator --force && npm publish --access public"
   },
   "keywords": [
     "js",
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@berlinsms/captcha-wrapper": "^1.0.4",
-    "@berlinsms/code-picker": "^1.0.6",
+    "@berlinsms/code-picker": "^1.0.7",
     "@berlinsms/country-picker": "^1.0.5",
     "@berlinsms/overlay": "^1.0.4"
   }
