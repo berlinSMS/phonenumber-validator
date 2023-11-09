@@ -6,8 +6,22 @@
     <title>Phonenumber Validator Example</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../dist/bsms-phonenumber-validator.min.js"></script>
+<!--
+    <script src="../../captcha-wrapper/src/bsms-captcha-wrapper.js"></script>
+    <script src="../../country-picker/src/bsms-country-picker.js"></script>
+    <script src="../../code-picker/src/bsms-code-picker.js"></script>
+    <script src="../../overlay/src/bsms-overlay.js"></script>
+    <script src="../src/bsms-phonenumber-validator.js"></script>
+    <link rel="stylesheet" href="../../country-picker/src/bsms-country-picker.css">
+    <link rel="stylesheet" href="../../code-picker/src/bsms-code-picker.css">
+    <link rel="stylesheet" href="../../overlay/src/bsms-overlay.css">
+    <link rel="stylesheet" href="../src/bsms-phonenumber-validator.css">
+-->
     <style>
-        h2, label, input { font-family: arial }
+        h2, label, input {
+            font-family: arial
+        }
+
         input {
             width: 355px;
             height: 28px;
@@ -23,14 +37,13 @@
         <br><br><label for="username">Username</label>
         <br><br><input id="username" type="text">
         <br><br><label for="phonenbr">Phonenumber</label>
-        <br><br><input id="phonenbr" type="text" class="phonenumber-validator-container">
+        <br><br><input id="phonenbr" type="text" class="phonenumber-validator-container" value="+421234567890">
         <br><br><input id="submit" type="submit" value="Register" disabled/>
     </form>
     <script>
         $(() => {
             // Apply the phonenumber-validator to the container
             const bpnv = $('.phonenumber-validator-container').bsmsPhonenumberValidator({
-                defaultCountry: "AT",
                 twofaSitekey: "yrNSeICcN6HNwDIZ7DffL5lyN8bM9mqRRnzHF8zJWjtWK9ZC2zy3dL8qyOMXfnAMuUvpG1Iyy5KPJ47ulD5oPQS6H6JW2dmkmnl0aK87n2ReuBWbaUOKF1GdNydIngOE",
                 showCredits: false
             })                

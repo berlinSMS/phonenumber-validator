@@ -1,45 +1,53 @@
 ﻿.bsms-phonenumber-validator {
     position: relative;
-	width: 373px;
+    width: 373px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
 }
-.bsms-phonenumber-validator .credits {    
-    position:relative;
-    left:80px;
-    top:0px;
+.bsms-phonenumber-validator .credits {
+    position: absolute;
+    left: 100px;
+    top: 32px;
     background-color: white;
     padding: 2px 10px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    color:black;
-    font-size:12px;
-    font-family:arial;
+    color: black;
+    font-size: 12px;
+    font-family: arial;
     text-decoration: None;
-	white-space: nowrap;
+    white-space: nowrap;
 }
 .bsms-phonenumber-validator .country-picker-container {
-    position:relative;
-    margin:0;
-    padding:1px 3px;
-    width:55px;
-    height:25px;
-    border:solid 2px darkblue;
-    border-radius:6px 0 0 6px;
-    overflow:visible;
-    display:inline-block;
-    vertical-align:top;
-    z-index:1
+    position: absolute;
+    margin: 0;
+    padding: 1px 3px;
+    width: 55px;
+    height: 100%;
+    border: solid 2px darkblue;
+    border-radius: 6px 0 0 6px;
+    overflow: visible;
+    /*display: flex;*/
+    /* vertical-align: top; */
+    z-index: 1;
+    align-items: center;
 }
 .bsms-phonenumber-validator .local-number {
-    margin:0;
-    padding:1px 3px;
-    width:300px;
-    height:25px;
-    border:solid 2px darkblue;
-    border-left:0;
-    border-radius:0 6px 6px 0;
-    display:inline-block;
-    vertical-align:top;
-    z-index:0
+    margin: 0;
+    padding: 1px 3px;
+    width: calc(100% - 63px);
+    /* height: 31px; */
+    border: solid 2px darkblue;
+    border-left: 0;
+    border-radius: 0 6px 6px 0;
+    display: flex;
+    /* align-items: middle; */
+    z-index: 0;
+    left: 65px;
+    position: absolute;
+    height: 100%;
+    align-items: center;
 }
 .bsms-phonenumber-validator .overlay {
     position: fixed;
@@ -121,21 +129,23 @@
     padding:10px;
     color:darkred;
 }
-.bsms-phonenumber-validator .wait-page {
-}
 .bsms-phonenumber-validator .state-button {
     position: absolute;
-    top: 2px;
-    right: 0;
+    top: 3px;
+    right: 1px;
     width: auto;
-    height: 27px;
+    height: 100%;
     color: #000;
     font-size: 13px;
-    display: flex;
     align-items: center;
     display: flex;
     background: #eee;
     padding: 0 8px;
+    border-radius: 0 3px 3px 0;
+    /* vertical-align: middle; */
+    margin: auto;
+}
+.bsms-phonenumber-validator .state-button.start {
     cursor: pointer;
 }
 .bsms-phonenumber-validator .state-button:hover {

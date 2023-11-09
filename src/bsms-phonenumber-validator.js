@@ -60,15 +60,18 @@
 
         const defaultSettings = {
             countries: undefined,
+            defaultState: 'start', //'start', 'verified' 
             defaultCountry: "DE",
             defaultLocalnumber: "",
-            inputNamePhonenumber: 'bsms-phonenumber',
+            defaultVerifiedNumber: "",
+            inputNamePhonenumber: '',
             inputNameToken: 'bsms-challenge-token',
             twofaSitekey: null,
             onSolved: null,
             onLoad: null,
             onExpired: null,
             onError: null,
+            onStateChange: null,
             showCredits: true
         };
 
@@ -82,17 +85,8 @@
 
         function buildDom(target, accountData) {
             const $validator = $(`<div class="bsms-phonenumber-validator"></div>`);
-            if ('div' == target.nodeName.toLowerCase()) {
-                $(target).append($validator);
-            } else {
-                $(target)
-                .hide()
-                .after($validator);
-            }
-            const $hiddenInputPhonenumber = $(`<input type="hidden" name="${settings.inputNamePhonenumber}">`)
-                .appendTo($validator);
-            const $hiddenInputToken = $(`<input type="hidden" name="${settings.inputNameToken}">`)
-                .appendTo($validator);
+            $(target).hide().after($validator);
+
             const $countryCode = $(`<div class="country-picker-container"></div>`)
                 .appendTo($validator)
                 .bsmsCountryPicker({ countries: settings.countries, defaultCountry: settings.defaultCountry, showCredits: false})
@@ -135,12 +129,36 @@
                 .addPage('captcha', '', $captchaPage)
                 .addPage('vcode', '', $vcodePage)
                 .addPage('error')
-                .addPage('wait','',`<div class="wait-page">&#x23f3;</div>`);
+                .addPage('wait', '', `<div class="wait-page">&#x23f3;</div>`);
 
-            //debug-defaults
-            $localNumber
-                .val(settings.defaultLocalnumber)
+
+            //prepare_target
+            const $hiddenInputToken = $(`<input type="hidden" name="${settings.inputNameToken}">`)
+                .appendTo($validator);
+            var $hiddenInputPhonenumber = $(target);
+            if ('input' != target.nodeName.toLowerCase()) {
+                $hiddenInputPhonenumber = $(`<input type="hidden">`)
+                    .appendTo($validator);
+            }
+            if (settings.inputNamePhonenumber)
+                $hiddenInputPhonenumber.attr('name', settings.inputNamePhonenumber);
+
+            //setting defaults
+            //1) defaults from input-tag
+            if (!settings.defaultVerifiedNumber) {
+                settings.defaultVerifiedNumber = $hiddenInputPhonenumber.val();
+            }
+            //2) defaults by defaultVerifiedNumber
+            if (settings.defaultVerifiedNumber) {
+                $countryCode.setByPhonenumber(settings.defaultVerifiedNumber);
+                settings.defaultCountry = $countryCode.getCountry();   
+                settings.defaultLocalnumber = settings.defaultVerifiedNumber.substr($countryCode.val().length);
+            }
+            //3) defaults by defaultCountry and defaultLocalnumber
+            $countryCode.setCountry(settings.defaultCountry);
+            $localNumber.val(settings.defaultLocalnumber)
                 .trigger('change');
+
 
             //Events
             function verificationStart(event) {
@@ -178,23 +196,29 @@
                 $overlay.showPage('captcha',`Captcha-Error: ${error}`);
             }
 
-            //events
-            function countryCodeChanged(event) {
-                //alert('countryCodeChanged:' + event.target);
-                //alert('countryCodeChanged:' + $(event.target).val());
+            function countryCodeChanged() {
+                localNumberChanged();
             }
-            function localNumberChanged(event) {
-                const localNumber = $(event.target).val();
-                if (localNumber.length <= 8) { $verifyButton.hide(); }
-                else if (localNumber.length >= 12) { $verifyButton.hide(); }
-                else { $verifyButton.fadeIn(fadeInDuration); }
-            }
-
             function localNumberKeyup(event) {
-                if (event.keyCode != 13) return localNumberChanged(event);
+                if (event.keyCode != 13) return localNumberChanged();
                 event.preventDefault();
                 if ($verifyButton.is(":hidden")) return;
                 $verifyButton.click();
+            }
+            function localNumberChanged() {
+                const localNumber = $localNumber.val();
+                $hiddenInputPhonenumber.val($countryCode.val() + $localNumber.val());
+                $verifyButton.hide();
+                $okCheckmark.hide();
+                if ('verified' == settings.defaultState
+                    && settings.defaultVerifiedNumber == $countryCode.val() + $localNumber.val()) {
+                    $okCheckmark.fadeIn(fadeInDuration);
+                }
+                else if (localNumber.length > 8
+                    && localNumber.length < 12) {
+                    $verifyButton.fadeIn(fadeInDuration);
+                } 
+                if (typeof settings.onStateChange === 'function') settings.onStateChange($okCheckmark.is(":visible") ? 'verified' : 'start');
             }
             async function vcodeEntered(vcode) {
                 try {
@@ -207,6 +231,7 @@
                     $localNumber.prop('readonly', true);
                     $countryCode.prop('readonly', true);
                     if (typeof settings.onSolved === 'function') settings.onSolved(g_challengeToken);
+                    if (typeof settings.onStateChange === 'function') settings.onStateChange('verified');
                 } catch (error) {
                     if (typeof settings.onError === 'function') settings.onError(error);
                     $overlay.showPage('vcode',`Der eingegebene Code war nicht korrekt.<br>Bitte geben Sie den Code erneut ein.<br>${error}`);
@@ -320,10 +345,11 @@
             return response;
         }
 
-        this.onSolved  = callback => { settings.onSolved  = callback; return this; };
-        this.onLoad    = callback => { settings.onLoad    = callback; return this; };
-        this.onExpired = callback => { settings.onExpired = callback; return this; };
-        this.onError = callback => { settings.onError = callback; return this; };
+        this.onSolved      = callback => { settings.onSolved      = callback; return this; };
+        this.onLoad        = callback => { settings.onLoad        = callback; return this; };
+        this.onExpired     = callback => { settings.onExpired     = callback; return this; };
+        this.onError       = callback => { settings.onError       = callback; return this; };
+        this.onStateChange = callback => { settings.onStateChange = callback; return this; };
 
         return this;
     };
